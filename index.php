@@ -4,7 +4,7 @@ if(isset($_POST['submit'])=='Submit'){
 	session_start();
 	$email = mysql_real_escape_string($_POST['email']);
 	$pass  = mysql_real_escape_string($_POST['pass']);
-	$sql   = "SELECT * FROM library_user WHERE email=? AND password=?";
+	$sql   = "SELECT firstname, user_type, user_id FROM library_user WHERE email=? AND password=?";
 	$res   = $dbh->prepare($sql);
 	
 	$res->execute(array($email,$pass));

@@ -8,6 +8,7 @@
 		<li><a href="profile.php">Profile</a></li>
 		<li><a href="video-category.php">Category</a></li>
 		<li><a href="add-video.php">Add Video</a></li>
+		<li><a href="changepassword.php">Change Password</a></li>
 		<li><a href="logout.php">Logout</a></li>
 	<?php } ?>
 	</ul>	
