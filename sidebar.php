@@ -5,12 +5,16 @@
 		$res=$dbh->prepare($sql);
 		$res->bindValue(':user_id', $_SESSION['id'], PDO::PARAM_INT);
 		$res->execute();
-		echo "<h3>Your Category</h3>";
-		echo "<ul class=\"sidemenu\">";
+		?>
+		<h3>Your Category <a href="#"><img src="images/16x16-ios7-settings-icon.png" border="0" alt="setting" style="float:right" /></a></h3>
+		<ul class="sidemenu">
+		<?php
 		while($row = $res->fetch(PDO::FETCH_ASSOC)){
 			echo "<li><a href=\"profile.php?cat=$row[category_id]\">$row[category_name]</a></li>";
 		}
-		echo "</ul>";
+		?>
+		</ul>
+		<?php
 		if(!empty($_GET['cat'])){
 			echo "<br/><a href=\"profile.php\">Clear</a><br/>";
 		}

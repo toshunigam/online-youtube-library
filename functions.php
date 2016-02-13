@@ -9,6 +9,15 @@ function dbRowInsert($table_name, $form_data){
 	// run and return the query result resource
 	return mysql_query($sql);
 }
+function Delete($table, $column, $key)
+{
+	global $dbh;
+	$sql="DELETE FROM ".$table." WHERE ".$column."=:id";
+	$res=$dbh->prepare($sql);
+	$res->bindValue(':id', $key, PDO::PARAM_INT);
+	$res->execute();
+	return array('_affectedrows'=>$res->rowCount());
+}
 function InsertPDO($table_name, $form_data)
 {
 	// retrieve the keys of the array (column titles)
