@@ -36,7 +36,12 @@ include 'functions.php';
 			$dbh=null;//it is good practice to null $dbh db connection
 			while($row = $res->fetch(PDO::FETCH_ASSOC)){ ?>
 				<div class="profile-page-video">
-					<?php ViewVideo($row['video_url'], $row['video_title']);?>
+					<?php 
+					if(!empty($row['video_url']) && !empty($row['video_title']))	
+						ViewVideo($row['video_url'], $row['video_title']);
+					else
+						echo "<h1>There is no more video available.</h1>";
+					?>
 				</div>
 			<?php } //end while loop ?>
 		</div><!--END CONTENT-->

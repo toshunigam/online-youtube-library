@@ -109,27 +109,27 @@ function dbRowUpdate($table_name, $form_data, $where_clause='')
 }
 // for video url
 function ViewVideo($url, $urlname, $size = 1){
-		if($size == 1) {		
+	if($size == 1) {		
 		$width = 320; $height = 210;
 	}else {
 		$width = 640; $height = 360; //default size
 	}
 	$url = substr($url, strrpos($url, "=")+1);
 	echo strrpos($url, "=");
-		echo '<object width="'.$width.'" height="'.$height.'" >';
-		echo '<param name="movie" value="//www.youtube.com/v/'.$url.'"></param>';
-		echo '<param name="allowFullScreen" value="true"></param>';
-		echo '<param name="allowscriptaccess" value="always"></param>';
-		echo '<embed src="//www.youtube.com/v/'.$url.'" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'" allowscriptaccess="always" allowfullscreen="true"></embed>';
-		echo '</object>';
+	echo '<object width="'.$width.'" height="'.$height.'" >';
+	echo '<param name="movie" value="//www.youtube.com/v/'.$url.'"></param>';
+	echo '<param name="allowFullScreen" value="true"></param>';
+	echo '<param name="allowscriptaccess" value="always"></param>';
+	echo '<embed src="//www.youtube.com/v/'.$url.'" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'" allowscriptaccess="always" allowfullscreen="true"></embed>';
+	echo '</object>';
 
 	}
 //search result function ********************************************
 function fulltextsearch($table, $fields, $match, $against, $user){
-global $dbh;
-$sql = "SELECT ".implode(',', $fields)." FROM ".$table." WHERE user_id=".$user." AND MATCH(".implode(',', $match).") AGAINST('".$against."' IN BOOLEAN MODE)";
+	global $dbh;
+	$sql = "SELECT ".implode(',', $fields)." FROM ".$table." WHERE user_id=".$user." AND MATCH(".implode(',', $match).") AGAINST('".$against."' IN BOOLEAN MODE)";
 
-$result = $dbh->query($sql);
-return $result;
+	$result = $dbh->query($sql);
+	return $result;
 }
 ?>

@@ -4,6 +4,10 @@ session_start();
 include 'header.php';
 
 ?>
+<style>
+.cat-name{ display:inline-block; }
+</style>
+<script src="js/jquery.js"></script>
 <script language="javascript">
 function validform(){
 	var x = document.forms["myform"]["category"].value;
@@ -12,8 +16,38 @@ function validform(){
 	document.forms["myform"]["category"].focus();
 	return false;
 	}
-
 }
+
+$(function(){
+	$('.edit').click(function() {
+		var text = $(this).closest('tr').find('.cat-name').text();
+		var input = $('<input type="text" id="category" name="category" value="' + text + '" />');
+		$(this).closest('tr').find('.cat-name').text('').append(input);
+		input.select();
+		
+		input.blur(function() {
+	   var text = $('#category').val();
+	   var mydata= $('#category').val();
+		var mylio = $(this).parent().siblings('td').children('.edit').attr('rel');
+		$.ajax({
+			type: "POST",
+			url: "ajax-operation.php",
+			data: {data:mydata, datalio:mylio},
+			success: function( data ) {
+				$( "#data" ).empty();
+				$( "#data" ).append(data);
+				
+			},
+			error: function(e){
+                console.log(e.message);
+            }
+		});
+		   $('#category').parent().text(text);
+		   $('#category').remove();
+		});
+		
+	});
+});
 </script>
 </head>
 
@@ -65,7 +99,7 @@ function validform(){
 	<tr><th>S.N.</th><th>Name</th><th>Date</th><th>Status</th><th>Edit</th><th>Delete</th></tr>
 	<?php 
 	while($row=$res->fetch(PDO::FETCH_ASSOC)){
-		echo "<tr><td>$sn</td><td>".$row['category_name']."</td><td>".$row['date']."</td><td>".$row['status']."</td><td><a href=\"video-category.php?edit=".$row['category_id']."\">edit</a></td><td><a onclick=\"return confirm('Are you sure you want to delete?')\" href=\"video-category.php?delete=".$row['category_id']."\">Delete</a></td></tr>";
+		echo "<tr><td>$sn</td><td class='cat-name'>".$row['category_name']."</td><td>".$row['date']."</td><td>".$row['status']."</td><td><a href=\"#\" rel=\"".$row['category_id']."\" class=\"edit\">edit</p></td><td><a onclick=\"return confirm('Are you sure you want to delete?')\" href=\"video-category.php?delete=".$row['category_id']."\">Delete</a></td></tr>";
 		$sn++;
 	}
 	?>
