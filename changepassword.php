@@ -16,11 +16,15 @@ if(isset($_POST['submit'])=='Change Password'){
 	//print_r($data);die;
  	if($data['password']===$old)
 	{
-		$query="UPDATE library_user SET password=:pwd WHERE user_id=:user_id";
+		$data=array('password'=>$new);
+		$filter=array('user_id'=>$_SESSION['id']);
+		/* $query="UPDATE library_user SET password=:pwd WHERE user_id=:user_id";
 		$res=$dbh->prepare($query);
 		$res->bindValue(':pwd',$new);
 		$res->bindValue(':user_id',$_SESSION['id']);
 		$res->execute();
+		 */
+		UpdatePDO('library_user',$data,$filter);
 		header("Location: logout.php");
 	}else
 	{

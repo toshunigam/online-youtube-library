@@ -4,9 +4,6 @@ session_start();
 include 'header.php';
 
 ?>
-<style>
-.cat-name{ display:inline-block; }
-</style>
 <script src="js/jquery.js"></script>
 <script language="javascript">
 function validform(){

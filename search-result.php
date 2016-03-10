@@ -23,7 +23,7 @@ include 'functions.php';
 			$search = mysql_real_escape_string($_POST['search']);
 			$fileds=array('video_url','video_title');
 			$match=array('video_url','video_title');
-			$res = FullTextSearch('video_library',$fields, $match, $search, $_SESSION['id']);
+			$res = FullTextSearch('video_library',$fileds, $match, $search, $_SESSION['id']);
 			$rows = $res->rowCount();
 			if($rows == 0){
 				echo '<em style="color:#FFAEAE;font-size:24px;">There is no match found in database.</em>';

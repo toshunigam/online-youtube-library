@@ -36,20 +36,39 @@ function InsertPDO($table_name, $form_data)
 	$res->execute($bind_data);
 	return array('_affectedrows'=>$res->rowCount(),'_lastid'=>$dbh->lastInsertId());
 }
-function UpdatePDO($table_name, $form_data, $filter)
+function UpdatePDO($table_name, $columns, $filter)
 {
-	// retrieve the keys of the array (column titles)
+	//put $dbh global for acces database connection
 	global $dbh;
-	$fields = array_keys($form_data);
-	//$bindvalue=array();
+	
+	//setup columns
+	$fields = array_keys($columns);
 	foreach($fields as $value)
-		$bindvalue[] = ':'.$value;
+		$bindcolumns[] = $value.'=:'.$value;
+	
+	//setup filters
+	$fields = array_keys($filter);
+	foreach($fields as $value)
+		$bindfilter[] = $value.'=:'.$value;
 	
 	// build the query
-	$sql = "UPDATE ".$table_name." SET ".implode(',', array_keys($form_data)).") WHERE ".implode(",", $bindvalue)."";
+	$sql = "UPDATE ".$table_name." SET ".implode(', ', $bindcolumns)." WHERE ".implode(" AND ", $bindfilter)."";
+	
+	//prepare the query statement
 	$res=$dbh->prepare($sql);
 	
+	//setup bindvalue for calumns
+	foreach($columns as $key=>$val)
+		$res->bindValue(":$key",$val);
+	
+	//setup bindvalue for filters
+	foreach($filter as $key=>$val)
+		$res->bindValue(":$key",$val);
+	
+	//finaly execute the query
+	$res->execute();
 }
+
 // the where clause is left optional incase the user wants to delete every row!
 function dbRowDelete($table_name, $where_clause='')
 {
